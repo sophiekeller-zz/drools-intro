@@ -4,14 +4,14 @@ rule "Denied"
     when
         a : Applicant( a.getApproval_status() == Applicant.DENIED)
     then
-        System.out.println( "Application for " + a.getName() + "was denied" );
+        System.out.println( "Application for " + a.getName() + " was denied with a score of " + a.getApproval_score() );
 end
 
 rule "Pending"
     when
         a : Applicant( a.getApproval_status() == Applicant.PENDING)
     then
-        System.out.println( "Application for " + a.getName() + "is still pending" );
+        System.out.println( "Application for " + a.getName() + " is still pending" );
 end
 
 rule "Advanced Coverage"
@@ -19,7 +19,7 @@ rule "Advanced Coverage"
 	when
 		a : Applicant( a.getApproval_status() == Applicant.APPROVED_ADVANCED)
 	then
-		System.out.println( "Application for " + a.getName() + "was approved with advanced coverage" );
+		System.out.println( "Application for " + a.getName() + " was approved with advanced coverage with a score of " + a.getApproval_score());
 end
 
 rule "Basic Coverage"
@@ -27,7 +27,7 @@ rule "Basic Coverage"
 	when
 		a : Applicant( a.getApproval_status() == Applicant.APPROVED_BASIC)
 	then
-		System.out.println( "Application for " + a.getName() + " was approved with basic coverage" );
+		System.out.println( "Application for " + a.getName() + " was approved with basic coverage with a score of " + a.getApproval_score()); 
 end
 
 rule "Gender-Male"

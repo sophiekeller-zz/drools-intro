@@ -36,8 +36,7 @@ rule "Gender-Male"
 		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getGender() == Applicant.MALE )
 	then 
 		a.setApproval_score(a.getApproval_score() + 1);
-		System.out.println("gender-male");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": gender-male, current score: " + a.getApproval_score());
 		
 end 
 
@@ -47,8 +46,7 @@ rule "Gender-Female"
 		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getGender() == Applicant.FEMALE )
 	then 
 		a.setApproval_score(a.getApproval_score() + 3);
-		System.out.println("gender-female");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": gender-female, current score: " + a.getApproval_score());
 		
 end 
 
@@ -58,8 +56,7 @@ rule "Status-Married"
 		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.isSingle() == false )
 	then 
 		a.setApproval_score(a.getApproval_score() + 3);
-		System.out.println("status-married");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": status-married, current score: " + a.getApproval_score());
 		
 end 
 
@@ -69,8 +66,7 @@ rule "Status-Unmarried"
 		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.isSingle() == true )
 	then 
 		a.setApproval_score(a.getApproval_score() + 1);
-		System.out.println("status-unmarried");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": status-unmarried, current score: " + a.getApproval_score());
 		
 end 
 
@@ -80,8 +76,7 @@ rule "Age 20 and under"
 		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() >= 2000  )
 	then 
 		a.setApproval_score(a.getApproval_score() - 3);
-		System.out.println("20 and under");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": age range 20 and under, current score: " + a.getApproval_score());
 		a.setRound(1);
 
 
@@ -94,8 +89,7 @@ rule "Age 21 to 40"
 		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() < 2000 && a.getDob().getYear() >= 1980 )
 	then 
 		a.setApproval_score(a.getApproval_score() );
-		System.out.println("21 to 40");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": age range 21-40, current score: " + a.getApproval_score());
 		a.setRound(1);
 		update(a);
 end 
@@ -106,8 +100,7 @@ rule "Age 41 to 55"
 		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() < 1980 && a.getDob().getYear() >= 1965 )
 	then 
 		a.setApproval_score(a.getApproval_score() + 2);
-		System.out.println("41-55");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": age range 41-55, current score: " + a.getApproval_score());
 		a.setRound(1);
 		update(a);
 		
@@ -119,8 +112,7 @@ rule "Age 70 and up"
 		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() <= 1950 )
 	then 
 		a.setApproval_score(a.getApproval_score() - 1 );
-		System.out.println("70 and up");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": age range 70 and up, current score: " + a.getApproval_score());
 		a.setRound(1);
 		update(a);
 		
@@ -130,11 +122,10 @@ end
 rule "North Region Setter"
 	salience 10
 	when 
-		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getZipcode() <= 250000 )
+		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getZipcode() <= 25000  )
 	then 
 		a.setRegion(Applicant.NORTH);
-		System.out.println("set region NORTH");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": region-north, current score: " + a.getApproval_score());
 		
 		
 end
@@ -142,22 +133,20 @@ end
 rule "East Region Setter"
 	salience 10
 	when 
-		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getZipcode() <= 500000 && a.getZipcode() > 250000 )
+		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getZipcode() <= 50000 && a.getZipcode() > 25000 )
 	then 
 		a.setRegion(Applicant.EAST);
-		System.out.println("set region EAST");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": region-east, current score: " + a.getApproval_score());
 		
 end
 
 rule "South Region Setter"
 	salience 10
 	when 
-		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getZipcode() <= 750000 && a.getZipcode() > 500000 )
+		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getZipcode() <= 75000 && a.getZipcode() > 50000 )
 	then 
 		a.setRegion(Applicant.SOUTH);
-		System.out.println("set region SOUTH");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": region-south, current score: " + a.getApproval_score());
 		
 end
 
@@ -165,11 +154,10 @@ end
 rule "West Region Setter"
 	salience 10
 	when 
-		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getZipcode() > 750000 )
+		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getZipcode() > 75000 )
 	then 
 		a.setRegion(Applicant.WEST);
-		System.out.println("set region WEST");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": region-west, current score: " + a.getApproval_score());
 		
 end
 
@@ -180,8 +168,7 @@ rule "Region Score Adder"
 	then 
 		a.setApproval_score(a.getApproval_score() + a.getRegion() );
 		System.out.println("added region score");
-		System.out.println(a.getApproval_score());
-		
+		System.out.println(a.getName() + ": region-add, current score: " + a.getApproval_score());
 end
 
 rule "Higher Education Status"
@@ -190,8 +177,7 @@ rule "Higher Education Status"
 		a : Applicant(a.getRound()==1, a.getApproval_status() == Applicant.APPROVED_BASIC, a.getEducation_status() >=1 )
 	then 
 		a.setApproval_score(a.getApproval_score() + 5);
-		System.out.println("higher education status");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + ": higher-education, current score: " + a.getApproval_score());
 		a.setRound(2);
 		update(a);		
 end
@@ -202,8 +188,7 @@ rule "Basic Coverage Check"
 		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getApproval_score() >= 4)
 	then 
 		a.setApproval_status(Applicant.APPROVED_BASIC);
-		System.out.println("achieved basic coverage");
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + " upgraded to basic");
 		update(a);
 		
 end
@@ -214,9 +199,7 @@ rule "Advanced Coverage Check"
 		a : Applicant( a.getApproval_status() == Applicant.APPROVED_BASIC, a.getApproval_score() >= 9)
 	then 
 		a.setApproval_status(Applicant.APPROVED_ADVANCED);
-		System.out.println(a.getApproval_status());
-		System.out.println("achieved advanced coverage");	
-		System.out.println(a.getApproval_score());
+		System.out.println(a.getName() + " upgraded to advanced");	
 		update(a);
 		
 end
@@ -227,8 +210,7 @@ rule "Denied Coverage Check"
 		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getApproval_score() < 4)
 	then 
 		a.setApproval_status(Applicant.DENIED);
-		System.out.println("achieved no coverage");
-		System.out.println(a.getApproval_score());	
+		System.out.println(a.getName() + " achieved no coverage");
 		update(a);
 end
 

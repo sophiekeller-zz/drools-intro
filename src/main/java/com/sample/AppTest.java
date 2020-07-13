@@ -24,10 +24,14 @@ public class AppTest {
 			Applicant B= new Applicant("John Doe", 0, "7/15/2000", 95000, true, Applicant.HIGH_SCHOOL_DIPLOMA);
 			Applicant C= new Applicant("Rachel Green", 1, "12/10/1999", 22124, true, Applicant.BACHELORS);
 			Applicant D= new Applicant("Brownie Brown", 1, "12/15/1999", 50004, false, Applicant.HIGH_SCHOOL_DIPLOMA);
+			Applicant E= new Applicant("John Smith", 0, "12/15/1973", 45000, false, Applicant.BACHELORS);
+			Applicant F= new Applicant("Sarah Johnson", 1, "12/15/1945", 0, true, Applicant.HIGH_SCHOOL_DIPLOMA);
 			kSession.insert(A);
 			kSession.insert(B);
 			kSession.insert(C);
 			kSession.insert(D);
+			kSession.insert(E);
+			kSession.insert(F);
 			kSession.fireAllRules();
 		} catch (Throwable t) {
 			t.printStackTrace();

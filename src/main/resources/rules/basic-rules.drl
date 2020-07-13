@@ -1,18 +1,231 @@
 import com.sample.Applicant;
 
-rule "Previously Denied"
+rule "Denied"
     when
         a : Applicant( a.getApproval_status() == Applicant.DENIED)
     then
-        System.out.println( "Application for " + a.getName() + "was previously denied" );
-        a.setApproval_status( Applicant.DENIED );
-        update( a );
+        System.out.println( "Application for " + a.getName() + "was denied" );
 end
 
-rule "Application Still Pending"
+rule "Pending"
+    when
+        a : Applicant( a.getApproval_status() == Applicant.PENDING)
+    then
+        System.out.println( "Application for " + a.getName() + "is still pending" );
+end
+
+rule "Advanced Coverage"
+	salience 0
 	when
-	        a : Applicant( a.getApproval_status() == Applicant.PENDING)
-	    then
-	        System.out.println( "Applicantion for " + a.getName() + " is still pending" );
+		a : Applicant( a.getApproval_status() == Applicant.APPROVED_ADVANCED)
+	then
+		System.out.println( "Application for " + a.getName() + "was approved with advanced coverage" );
+end
+
+rule "Basic Coverage"
+	salience 0
+	when
+		a : Applicant( a.getApproval_status() == Applicant.APPROVED_BASIC)
+	then
+		System.out.println( "Application for " + a.getName() + " was approved with basic coverage" );
+end
+
+rule "Gender-Male"
+	salience 6
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getGender() == Applicant.MALE )
+	then 
+		a.setApproval_score(a.getApproval_score() + 1);
+		System.out.println("gender-male");
+		System.out.println(a.getApproval_score());
+		
+end 
+
+rule "Gender-Female"
+	salience 6
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getGender() == Applicant.FEMALE )
+	then 
+		a.setApproval_score(a.getApproval_score() + 3);
+		System.out.println("gender-female");
+		System.out.println(a.getApproval_score());
+		
+end 
+
+rule "Status-Married"
+	salience 6
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.isSingle() == false )
+	then 
+		a.setApproval_score(a.getApproval_score() + 3);
+		System.out.println("status-married");
+		System.out.println(a.getApproval_score());
+		
+end 
+
+rule "Status-Unmarried"
+	salience 6
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.isSingle() == true )
+	then 
+		a.setApproval_score(a.getApproval_score() + 1);
+		System.out.println("status-unmarried");
+		System.out.println(a.getApproval_score());
+		
+end 
+
+rule "Age 20 and under"
+	salience 6
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() >= 2000  )
+	then 
+		a.setApproval_score(a.getApproval_score() - 3);
+		System.out.println("20 and under");
+		System.out.println(a.getApproval_score());
+		update(a);
+
+		
+end 
+
+rule "Age 21 to 40"
+	salience 6
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() < 2000 && a.getDob().getYear() >= 1980 )
+	then 
+		a.setApproval_score(a.getApproval_score() - 3);
+		System.out.println("20 and under");
+		System.out.println(a.getApproval_score());
+		update(a);
+
+		
+end 
+
+rule "Age 41 to 55"
+	salience 6
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() < 1980 && a.getDob().getYear() >= 1965 )
+	then 
+		a.setApproval_score(a.getApproval_score() + 2);
+		System.out.println("41-55");
+		System.out.println(a.getApproval_score());
+		update(a);
+		
+end 
+
+rule "Age 70 and up"
+	salience 6
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() <= 1950 )
+	then 
+		a.setApproval_score(a.getApproval_score() - 1 );
+		System.out.println("70 and up");
+		System.out.println(a.getApproval_score());
+		update(a);
+		
+end
+
+rule "North Region Setter"
+	salience 10
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getZipcode() <= 250000 )
+	then 
+		a.setRegion(Applicant.NORTH);
+		System.out.println("set region NORTH");
+		System.out.println(a.getApproval_score());
+		
+		
+end
+
+rule "East Region Setter"
+	salience 10
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getZipcode() <= 500000 && a.getZipcode() > 250000 )
+	then 
+		a.setRegion(Applicant.EAST);
+		System.out.println("set region EAST");
+		System.out.println(a.getApproval_score());
+		
+end
+
+rule "South Region Setter"
+	salience 10
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getZipcode() <= 750000 && a.getZipcode() > 500000 )
+	then 
+		a.setRegion(Applicant.SOUTH);
+		System.out.println("set region SOUTH");
+		System.out.println(a.getApproval_score());
+		
+end
+
+
+rule "West Region Setter"
+	salience 10
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getZipcode() > 750000 )
+	then 
+		a.setRegion(Applicant.WEST);
+		System.out.println("set region WEST");
+		System.out.println(a.getApproval_score());
+		
+end
+
+rule "Region Score Adder"
+	salience 3
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.APPROVED_BASIC, a.getRegion() >= 0)
+	then 
+		a.setApproval_score(a.getApproval_score() + a.getRegion() );
+		System.out.println("added region score");
+		System.out.println(a.getApproval_score());
+		
+end
+
+rule "Higher Education Status"
+	salience 3
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.APPROVED_BASIC, a.getEducation_status() >=1 )
+	then 
+		a.setApproval_score(a.getApproval_score() + 5);
+		System.out.println("higher education status");
+		System.out.println(a.getApproval_score());
+		update(a);
+		
+end
+
+rule "Basic Coverage Check"
+	salience 5
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getApproval_score() >= 4)
+	then 
+		a.setApproval_status(Applicant.APPROVED_BASIC);
+		System.out.println("achieved basic coverage");
+		System.out.println(a.getApproval_score());
+		update(a);
+		
+end
+		
+rule "Advanced Coverage Check"
+	salience 2
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.APPROVED_BASIC, a.getApproval_score() >= 9)
+	then 
+		a.setApproval_status(Applicant.APPROVED_ADVANCED);
+		System.out.println(a.getApproval_status());
+		System.out.println("achieved advanced coverage");	
+		System.out.println(a.getApproval_score());
+		update(a);
+end
+
+rule "Denied Coverage Check"
+	salience 1
+	when 
+		a : Applicant( a.getApproval_status() == Applicant.PENDING, a.getApproval_score() < 4)
+	then 
+		a.setApproval_status(Applicant.DENIED);
+		System.out.println("achieved no coverage");
+		System.out.println(a.getApproval_score());	
+		update(a);
+		
 end
 

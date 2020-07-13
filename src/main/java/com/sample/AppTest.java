@@ -15,7 +15,7 @@ public class AppTest {
 			KieSession kSession= kContainer.newKieSession("ksession-rules");
 
 			// assembling facts and firing
-			Applicant A= new Applicant("Jane Doe", 'f', "7/13/1990", 22124, true, Applicant.BACHELORS);
+			Applicant A= new Applicant("Jane Doe", 1, "7/13/1990", 22124, true, Applicant.BACHELORS);
 			kSession.insert(A);
 			kSession.fireAllRules();
 		} catch (Throwable t) {

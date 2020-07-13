@@ -14,14 +14,14 @@ public class Date {
 	}
 
 	public int getMonth() {
-		return month;
+		return this.month;
 	}
 
 	public int getYear() {
-		return year;
+		return this.year;
 	}
 
 	public int getDay() {
-		return day;
+		return this.day;
 	}
 }

@@ -1,0 +1,18 @@
+import com.sample.Applicant;
+
+rule "Previously Denied"
+    when
+        a : Applicant( a.getApproval_status() == Applicant.DENIED)
+    then
+        System.out.println( "Application for " + a.getName() + "was previously denied" );
+        a.setApproval_status( Applicant.DENIED );
+        update( a );
+end
+
+rule "Application Still Pending"
+	when
+	        a : Applicant( a.getApproval_status() == Applicant.PENDING)
+	    then
+	        System.out.println( "Applicantion for " + a.getName() + " is still pending" );
+end
+

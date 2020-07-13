@@ -1,21 +1,21 @@
 package com.sample;
 
 public class Applicant {
-	String name;
-	char gender;
-	Date dob;// create date object
-	int zipcode;
-	boolean single;
-	int education_status;
+	private String name;
+	private char gender;
+	private Date dob;// create date object
+	private int zipcode;
+	private boolean single;
+	private int education_status;
 
-	static final int HIGH_SCHOOL_DIPLOMA= 0;
-	static final int UNDERGRAD= 1;
-	static final int MASTER= 2;
+	public static final int HIGH_SCHOOL_DIPLOMA= 0;
+	public static final int BACHELORS= 1;
+	public static final int MASTERS= 2;
 
-	public Applicant(String n, char g, Date d, int z, boolean s, int e) {
+	public Applicant(String n, char g, String d, int z, boolean s, int e) {
 		name= n;
 		gender= g;
-		dob= d;
+		dob= new Date(d);
 		zipcode= z;
 		single= s;
 		education_status= e;

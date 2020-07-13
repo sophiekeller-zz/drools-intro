@@ -12,6 +12,7 @@ public class Applicant {
 	private int approval_status;
 	private int approval_score;
 	private int region;// fake
+	private int round;
 
 	public static final int HIGH_SCHOOL_DIPLOMA= 0;
 	public static final int BACHELORS= 1;
@@ -41,6 +42,7 @@ public class Applicant {
 		approval_status= 0;
 		approval_score= 0;
 		region= -1;
+		round= 0;
 	}
 
 	public int getApproval_score() {
@@ -113,6 +115,14 @@ public class Applicant {
 
 	public String getName() {
 		return name;
+	}
+
+	public int getRound() {
+		return round;
+	}
+
+	public void setRound(int round) {
+		this.round= round;
 	}
 
 }

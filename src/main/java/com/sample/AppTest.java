@@ -6,8 +6,10 @@ import org.kie.api.runtime.KieSession;
 
 /** This is a sample class to launch a rule. */
 public class AppTest {
+	public static Applicant A;
 
 	public static final void main(String[] args) {
+		MySqlConnection db= new MySqlConnection();
 		try {
 			// load up the knowledge base: Knowledge is Everything
 			// KieServices is the interface from where it possible to access all the Kie building and runtime
@@ -20,7 +22,7 @@ public class AppTest {
 			KieSession kSession= kContainer.newKieSession("ksession-rules");
 
 			// assembling facts and firing
-			Applicant A= new Applicant("Jane Doe", 1, "7/13/1990", 5000, 1, Applicant.MASTERS, 0);
+			A= new Applicant("Jane Doe", 1, "7/13/1990", 5000, 1, Applicant.MASTERS, 0);
 			Applicant B= new Applicant("John Doe", 0, "7/15/2000", 95000, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
 			Applicant C= new Applicant("Rachel Green", 1, "12/10/1999", 22124, 1, Applicant.BACHELORS, 0);
 			Applicant D= new Applicant("Brownie Brown", 1, "12/15/1999", 50004, 0, Applicant.HIGH_SCHOOL_DIPLOMA,
@@ -36,6 +38,11 @@ public class AppTest {
 			kSession.fireAllRules();
 		} catch (Throwable t) {
 			t.printStackTrace();
+		}
+		try {
+			db.writeDataBaseApplicant(A);
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 }

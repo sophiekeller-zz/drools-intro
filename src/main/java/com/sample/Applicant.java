@@ -7,12 +7,18 @@ public class Applicant {
 	private int zipcode;
 	private boolean single;
 	private int education_status;
+	private int id;
+	private int state;
+	private int risk;
 
 	// metadata
 	private int approval_status;
+
 	private int approval_score;
 	private int region;// fake
 	private int round;
+
+	private static int app_id;
 
 	public static final int HIGH_SCHOOL_DIPLOMA= 0;
 	public static final int BACHELORS= 1;
@@ -32,17 +38,37 @@ public class Applicant {
 	public static final int APPROVED_ADVANCED= 2;
 	public static final int DENIED= 3;
 
-	public Applicant(String n, int g, String d, int z, boolean s, int e) {
+	// state
+	public static final int INCOMPLETE= 0;
+	public static final int COMPLETE= 1;
+
+	public static final int LOW= 0;
+	public static final int HIGH= 1;
+
+	public Applicant(String n, int g, String d, int z, boolean s, int e, int r) {
 		name= n;
 		gender= g;
 		dob= new Date(d);
 		zipcode= z;
 		single= s;
 		education_status= e;
-		approval_status= 0;
+		risk= r;
+		approval_status= PENDING;
 		approval_score= 0;
 		region= -1;
 		round= 0;
+		state= COMPLETE;
+		++app_id;
+		id= app_id;
+
+	}
+
+	public int getRisk() {
+		return risk;
+	}
+
+	public void setRisk(int risk) {
+		this.risk= risk;
 	}
 
 	public int getApproval_score() {
@@ -117,12 +143,28 @@ public class Applicant {
 		return name;
 	}
 
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state= state;
+	}
+
 	public int getRound() {
 		return round;
 	}
 
 	public void setRound(int round) {
 		this.round= round;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id= id;
 	}
 
 }

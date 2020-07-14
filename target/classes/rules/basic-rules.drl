@@ -1,34 +1,58 @@
 import com.sample.Applicant;
 
+rule "Incomplete due to risk"
+    salience 9
+    when
+        a : Applicant(a.getRound() != 3, a.getRisk()==Applicant.HIGH)
+    then
+    	a.setState(Applicant.INCOMPLETE);
+        System.out.println( "Application for " + a.getName() + ", id: " + a.getId() + " was marked incomplete,  state is " + a.getState());
+        a.setRound(3);
+        update(a);
+end
+
 rule "Denied"
     when
-        a : Applicant( a.getApproval_status() == Applicant.DENIED)
+        a : Applicant(a.getState() == COMPLETE, a.getRound() != 3, a.getApproval_status() == Applicant.DENIED)
     then
-        System.out.println( "Application for " + a.getName() + " was denied with a score of " + a.getApproval_score() );
+    	a.setState(Applicant.COMPLETE);
+        System.out.println( "Application for " + a.getName() + ", id: " + a.getId() + " was denied with a score of " + a.getApproval_score() + " state is " + a.getState());
+        a.setRound(3);
+        update(a);
 end
 
 rule "Pending"
     when
-        a : Applicant( a.getApproval_status() == Applicant.PENDING)
+        a : Applicant(a.getState() == COMPLETE, a.getRound() != 3, a.getApproval_status() == Applicant.PENDING)
     then
-        System.out.println( "Application for " + a.getName() + " is still pending" );
+    	a.setState(Applicant.INCOMPLETE);
+        System.out.println( "Application for " + a.getName() + ", id: " + a.getId() + " is still pending" + " state is " + a.getState() );
+        a.setRound(3);
+        update(a);
 end
 
 rule "Advanced Coverage"
 	salience 0
 	when
-		a : Applicant( a.getApproval_status() == Applicant.APPROVED_ADVANCED)
+		a : Applicant(a.getState() == COMPLETE, a.getRound() != 3, a.getApproval_status() == Applicant.APPROVED_ADVANCED)
 	then
-		System.out.println( "Application for " + a.getName() + " was approved with advanced coverage with a score of " + a.getApproval_score());
+		a.setState(Applicant.COMPLETE);
+		System.out.println( "Application for " + a.getName() + ", id: " + a.getId() + " was approved with advanced coverage with a score of " + a.getApproval_score() + " state is " + a.getState());
+		a.setRound(3);
+		update(a);
 end
 
 rule "Basic Coverage"
 	salience 0
 	when
-		a : Applicant( a.getApproval_status() == Applicant.APPROVED_BASIC)
+		a : Applicant(a.getState() == COMPLETE, a.getRound() != 3, a.getApproval_status() == Applicant.APPROVED_BASIC)
 	then
-		System.out.println( "Application for " + a.getName() + " was approved with basic coverage with a score of " + a.getApproval_score()); 
+		a.setState(Applicant.COMPLETE);
+		System.out.println( "Application for " + a.getName() + ", id: " + a.getId() + " was approved with basic coverage with a score of " + a.getApproval_score() + " state is " + a.getState()); 
+		a.setRound(3);
+		update(a);
 end
+
 
 rule "Gender-Male"
 	salience 6
@@ -78,10 +102,9 @@ rule "Age 20 and under"
 		a.setApproval_score(a.getApproval_score() - 3);
 		System.out.println(a.getName() + ": age range 20 and under, current score: " + a.getApproval_score());
 		a.setRound(1);
-
-
-		
+		update(a);	
 end 
+
 
 rule "Age 21 to 40"
 	salience 6
@@ -114,10 +137,9 @@ rule "Age 70 and up"
 		a.setApproval_score(a.getApproval_score() - 1 );
 		System.out.println(a.getName() + ": age range 70 and up, current score: " + a.getApproval_score());
 		a.setRound(1);
-		update(a);
-		
-		
+		update(a);	
 end
+
 
 rule "North Region Setter"
 	salience 10

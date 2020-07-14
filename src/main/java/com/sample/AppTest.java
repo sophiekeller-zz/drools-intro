@@ -20,13 +20,13 @@ public class AppTest {
 			KieSession kSession= kContainer.newKieSession("ksession-rules");
 
 			// assembling facts and firing
-			Applicant A= new Applicant("Jane Doe", 1, "7/13/1990", 5000, true, Applicant.MASTERS, 0);
-			Applicant B= new Applicant("John Doe", 0, "7/15/2000", 95000, true, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
-			Applicant C= new Applicant("Rachel Green", 1, "12/10/1999", 22124, true, Applicant.BACHELORS, 0);
-			Applicant D= new Applicant("Brownie Brown", 1, "12/15/1999", 50004, false, Applicant.HIGH_SCHOOL_DIPLOMA,
+			Applicant A= new Applicant("Jane Doe", 1, "7/13/1990", 5000, 1, Applicant.MASTERS, 0);
+			Applicant B= new Applicant("John Doe", 0, "7/15/2000", 95000, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
+			Applicant C= new Applicant("Rachel Green", 1, "12/10/1999", 22124, 1, Applicant.BACHELORS, 0);
+			Applicant D= new Applicant("Brownie Brown", 1, "12/15/1999", 50004, 0, Applicant.HIGH_SCHOOL_DIPLOMA,
 				1);
-			Applicant E= new Applicant("John Smith", 0, "12/15/1973", 45000, false, Applicant.BACHELORS, 0);
-			Applicant F= new Applicant("Sarah Johnson", 1, "12/15/1945", 0, true, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
+			Applicant E= new Applicant("John Smith", 0, "12/15/1973", 45000, 0, Applicant.BACHELORS, 0);
+			Applicant F= new Applicant("Sarah Johnson", 1, "12/15/1945", 0, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
 			kSession.insert(A);
 			kSession.insert(B);
 			kSession.insert(C);

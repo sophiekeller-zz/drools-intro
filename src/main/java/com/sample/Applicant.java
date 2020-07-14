@@ -5,7 +5,7 @@ public class Applicant {
 	private int gender;
 	private Date dob;// create date object
 	private int zipcode;
-	private boolean single;
+	private int single;
 	private int education_status;
 	private int id;
 	private int state;
@@ -45,7 +45,7 @@ public class Applicant {
 	public static final int LOW= 0;
 	public static final int HIGH= 1;
 
-	public Applicant(String n, int g, String d, int z, boolean s, int e, int r) {
+	public Applicant(String n, int g, String d, int z, int s, int e, int r) {
 		name= n;
 		gender= g;
 		dob= new Date(d);
@@ -111,11 +111,11 @@ public class Applicant {
 		this.zipcode= zipcode;
 	}
 
-	public boolean isSingle() {
+	public int isSingle() {
 		return single;
 	}
 
-	public void setSingle(boolean single) {
+	public void setSingle(int single) {
 		this.single= single;
 	}
 

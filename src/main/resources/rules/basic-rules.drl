@@ -77,7 +77,7 @@ end
 rule "Status-Married"
 	salience 6
 	when 
-		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.isSingle() == false )
+		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.isSingle() == 0 )
 	then 
 		a.setApproval_score(a.getApproval_score() + 3);
 		System.out.println(a.getName() + ": status-married, current score: " + a.getApproval_score());
@@ -87,7 +87,7 @@ end
 rule "Status-Unmarried"
 	salience 6
 	when 
-		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.isSingle() == true )
+		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.isSingle() == 1 )
 	then 
 		a.setApproval_score(a.getApproval_score() + 1);
 		System.out.println(a.getName() + ": status-unmarried, current score: " + a.getApproval_score());

@@ -97,7 +97,7 @@ end
 rule "Age 20 and under"
 	salience 6
 	when 
-		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() >= 2000  )
+		a : Applicant(a.getRound() == 0,  a.getApproval_status() == Applicant.PENDING, a.getDob() >= 2000  )
 	then 
 		a.setApproval_score(a.getApproval_score() - 3);
 		System.out.println(a.getName() + ": age range 20 and under, current score: " + a.getApproval_score());
@@ -109,7 +109,7 @@ end
 rule "Age 21 to 40"
 	salience 6
 	when 
-		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() < 2000 && a.getDob().getYear() >= 1980 )
+		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getDob() < 2000 && a.getDob() >= 1980 )
 	then 
 		a.setApproval_score(a.getApproval_score() );
 		System.out.println(a.getName() + ": age range 21-40, current score: " + a.getApproval_score());
@@ -120,7 +120,7 @@ end
 rule "Age 41 to 55"
 	salience 6
 	when 
-		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() < 1980 && a.getDob().getYear() >= 1965 )
+		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getDob() < 1980 && a.getDob() >= 1965 )
 	then 
 		a.setApproval_score(a.getApproval_score() + 2);
 		System.out.println(a.getName() + ": age range 41-55, current score: " + a.getApproval_score());
@@ -132,7 +132,7 @@ end
 rule "Age 70 and up"
 	salience 6
 	when 
-		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getDob().getYear() <= 1950 )
+		a : Applicant(a.getRound() == 0, a.getApproval_status() == Applicant.PENDING, a.getDob() <= 1950 )
 	then 
 		a.setApproval_score(a.getApproval_score() - 1 );
 		System.out.println(a.getName() + ": age range 70 and up, current score: " + a.getApproval_score());

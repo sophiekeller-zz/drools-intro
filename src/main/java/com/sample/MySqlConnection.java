@@ -36,7 +36,7 @@ public class MySqlConnection {
 	public void writeDataBaseApplicant(Applicant A) {
 		String name= A.getName();
 		int gender= A.getGender();
-		Date dob= A.getDob();
+		int dob= A.getDob();
 		int single= A.isSingle();
 		int education_status= A.getEducation_status();
 		int id= A.getId();
@@ -62,7 +62,7 @@ public class MySqlConnection {
 			if (state == 1) {
 				preparedStatement= connect.prepareStatement(
 					"INSERT IGNORE INTO applicantRecords (id, name, dob, gender, single, risk, education, approvalStatus, approvalScore, region)" +
-						"VALUES (" + id + ", '" + name + "' , " + dob.getYear() + ", " + gender + ", " + single + ", " +
+						"VALUES (" + id + ", '" + name + "' , " + dob + ", " + gender + ", " + single + ", " +
 						risk +
 						", " +
 						education_status + ", " + approval_status + ", " + approval_score + ", " + region +

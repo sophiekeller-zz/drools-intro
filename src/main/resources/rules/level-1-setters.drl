@@ -1,9 +1,0 @@
-import com.sample.ApplicantInfo;
-import com.sample.Applicant;
-
-rule "setGender"
-	when 
-		i : ApplicantInfo(i.getGender() == 0 || i.getGender() == 1)
-	then
-		i.setGender(); //sets the Applicant field's gender. 
-end

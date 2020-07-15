@@ -1,6 +1,15 @@
 package com.sample;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.drools.compiler.lang.DrlDumper;
+import org.drools.compiler.lang.api.DescrFactory;
+import org.drools.compiler.lang.api.PackageDescrBuilder;
+import org.drools.template.ObjectDataCompiler;
 import org.kie.api.KieServices;
+import org.kie.api.builder.KieFileSystem;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
@@ -14,6 +23,8 @@ public class AppTest {
 	public static Applicant F;
 	public static Applicant G;
 	public static Applicant H;
+
+	public static ApplicantInfo test;
 
 	public static final void main(String[] args) {
 		MySqlConnection db= new MySqlConnection();
@@ -29,15 +40,23 @@ public class AppTest {
 			KieSession kSession= kContainer.newKieSession("ksession-rules");
 
 			// assembling facts and firing
-			A= new Applicant("Jane Doe", 1, "7/13/1990", 5000, 1, Applicant.MASTERS, 0);
-			B= new Applicant("John Doe", 0, "7/15/2000", 95000, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
-			C= new Applicant("Rachel Green", 1, "12/10/1999", 22124, 1, Applicant.BACHELORS, 0);
-			D= new Applicant("Brownie Brown", 1, "12/15/1999", 50004, 0, Applicant.HIGH_SCHOOL_DIPLOMA,
+			A= new Applicant("Jane Doe", 1, 1990, 5000, 1, Applicant.MASTERS, 0);
+			B= new Applicant("John Doe", 0, 2000, 95000, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
+			C= new Applicant("Rachel Green", 1, 1999, 22124, 1, Applicant.BACHELORS, 0);
+			D= new Applicant("Brownie Brown", 1, 1999, 50004, 0, Applicant.HIGH_SCHOOL_DIPLOMA,
 				1);
-			E= new Applicant("John Smith", 0, "12/15/1973", 45000, 0, Applicant.BACHELORS, 0);
-			F= new Applicant("Sarah Johnson", 1, "12/15/1945", 0, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
-			G= new Applicant("Sophie Keller", 1, "03/17/2000", 60613, 0, Applicant.BACHELORS, 0);
-			H= new Applicant("Greta Keller", 1, "03/17/2000", 60613, 0, Applicant.BACHELORS, 0);
+			E= new Applicant("John Smith", 0, 1973, 45000, 0, Applicant.BACHELORS, 0);
+			F= new Applicant("Sarah Johnson", 1, 1945, 0, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
+			G= new Applicant("Sophie Keller", 1, 2000, 60613, 0, Applicant.BACHELORS, 0);
+			H= new Applicant("Greta Keller", 1, 2000, 60613, 0, Applicant.BACHELORS, 0);
+
+			test= new ApplicantInfo();
+			InputStream template= AppTest.class.getResourceAsStream("/src/main/resources/rules/level-1-setters.drt");
+			List<ApplicantInfo> data= new ArrayList<>();
+			data.add(test);
+			ObjectDataCompiler converter= new ObjectDataCompiler();
+			String drl= converter.compile(data, template);
+
 			kSession.insert(A);
 			kSession.insert(B);
 			kSession.insert(C);
@@ -62,5 +81,23 @@ public class AppTest {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+
+	// String [] row1 = [“setGender”, “gender”, “==”, “int”, "0"]
+	private void addRule(KieFileSystem kieFileSystem, String[] arr) {
+		PackageDescrBuilder packageDescrBuilder= DescrFactory.newPackage();
+		packageDescrBuilder
+			.name("rules")
+			.newRule()
+			.name(arr[0])
+			.lhs()
+			.pattern("ApplicantInfo").constraint(arr[1] + arr[2] + arr[3]).end()
+			.pattern().id("$a", false).type("Action").end()
+			.end()
+			.rhs("$a.showBanner( false );")
+			.end();
+
+		String rules= new DrlDumper().dump(packageDescrBuilder.getDescr());
+		kieFileSystem.write("src/main/resources/rules/level-1-setters.drl", rules);
 	}
 }

@@ -3,22 +3,21 @@ package com.sample;
 public class Applicant {
 	private String name;
 	private int gender;
-	private Date dob;// create date object
+	private int dob;// create date object
 	private int zipcode;
 	private int single;
 	private int education_status;
 	private int id;
-	private int state;
 	private int risk;
 
 	// metadata
 	private int approval_status;
-
+	private int state;
 	private int approval_score;
 	private int region;// fake
 	private int round;
 
-	private static int app_id;
+	// private static int app_id;
 
 	public static final int HIGH_SCHOOL_DIPLOMA= 0;
 	public static final int BACHELORS= 1;
@@ -45,10 +44,10 @@ public class Applicant {
 	public static final int LOW= 0;
 	public static final int HIGH= 1;
 
-	public Applicant(String n, int g, String d, int z, int s, int e, int r) {
+	public Applicant(String n, int g, int d, int z, int s, int e, int r) {
 		name= n;
 		gender= g;
-		dob= new Date(d);
+		dob= d;
 		zipcode= z;
 		single= s;
 		education_status= e;
@@ -58,9 +57,25 @@ public class Applicant {
 		region= -1;
 		round= 0;
 		state= COMPLETE;
-		++app_id;
-		id= app_id;
+//		++app_id;
+//		id= app_id;
 
+	}
+
+	public Applicant(int id) {
+		name= null;
+		gender= -1;
+		dob= -1;
+		zipcode= -1;
+		single= -1;
+		education_status= -1;
+		risk= -1;
+		approval_status= PENDING;
+		approval_score= 0;
+		region= -1;
+		round= 0;
+		state= COMPLETE;
+		this.id= id;
 	}
 
 	public int getRisk() {
@@ -91,15 +106,15 @@ public class Applicant {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(int gender) {
 		this.gender= gender;
 	}
 
-	public Date getDob() {
+	public int getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(int dob) {
 		this.dob= dob;
 	}
 

@@ -1,0 +1,35 @@
+/**import com.sample.ApplicantInfo;
+import com.sample.Applicant;
+
+rule "setGender"
+	when 
+		i : ApplicantInfo(i.getGender() == 0 || i.getGender() == 1)
+	then
+		i.setGender(); //sets the Applicant field's gender. 
+end*/
+
+//String [] row1 = [“setGender”, “gender”, “==”, “int”, "2" “0,1”]
+
+template header
+
+ruleName
+field
+conditonal
+value
+
+package drools.templates;
+
+import com.sample.Applicant;
+
+template "level-1-setters"
+
+rule  "@{ruleName}"
+	when
+    	$a : ApplicantInfo(@{field} @{conditional} @{value})
+	then
+		methodName = @{ruleName};
+        Method setNameMethod = $a.getClass().getMethod(methodName);
+        setNameMethod.invoke($a); // pass arg
+end
+
+end template

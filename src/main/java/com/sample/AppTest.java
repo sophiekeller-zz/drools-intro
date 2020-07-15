@@ -7,6 +7,13 @@ import org.kie.api.runtime.KieSession;
 /** This is a sample class to launch a rule. */
 public class AppTest {
 	public static Applicant A;
+	public static Applicant B;
+	public static Applicant C;
+	public static Applicant D;
+	public static Applicant E;
+	public static Applicant F;
+	public static Applicant G;
+	public static Applicant H;
 
 	public static final void main(String[] args) {
 		MySqlConnection db= new MySqlConnection();
@@ -23,24 +30,35 @@ public class AppTest {
 
 			// assembling facts and firing
 			A= new Applicant("Jane Doe", 1, "7/13/1990", 5000, 1, Applicant.MASTERS, 0);
-			Applicant B= new Applicant("John Doe", 0, "7/15/2000", 95000, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
-			Applicant C= new Applicant("Rachel Green", 1, "12/10/1999", 22124, 1, Applicant.BACHELORS, 0);
-			Applicant D= new Applicant("Brownie Brown", 1, "12/15/1999", 50004, 0, Applicant.HIGH_SCHOOL_DIPLOMA,
+			B= new Applicant("John Doe", 0, "7/15/2000", 95000, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
+			C= new Applicant("Rachel Green", 1, "12/10/1999", 22124, 1, Applicant.BACHELORS, 0);
+			D= new Applicant("Brownie Brown", 1, "12/15/1999", 50004, 0, Applicant.HIGH_SCHOOL_DIPLOMA,
 				1);
-			Applicant E= new Applicant("John Smith", 0, "12/15/1973", 45000, 0, Applicant.BACHELORS, 0);
-			Applicant F= new Applicant("Sarah Johnson", 1, "12/15/1945", 0, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
+			E= new Applicant("John Smith", 0, "12/15/1973", 45000, 0, Applicant.BACHELORS, 0);
+			F= new Applicant("Sarah Johnson", 1, "12/15/1945", 0, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
+			G= new Applicant("Sophie Keller", 1, "03/17/2000", 60613, 0, Applicant.BACHELORS, 0);
+			H= new Applicant("Greta Keller", 1, "03/17/2000", 60613, 0, Applicant.BACHELORS, 0);
 			kSession.insert(A);
 			kSession.insert(B);
 			kSession.insert(C);
 			kSession.insert(D);
 			kSession.insert(E);
 			kSession.insert(F);
+			kSession.insert(G);
+			kSession.insert(H);
 			kSession.fireAllRules();
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
 		try {
 			db.writeDataBaseApplicant(A);
+			db.writeDataBaseApplicant(B);
+			db.writeDataBaseApplicant(C);
+			db.writeDataBaseApplicant(D);
+			db.writeDataBaseApplicant(E);
+			db.writeDataBaseApplicant(F);
+			db.writeDataBaseApplicant(G);
+			db.writeDataBaseApplicant(H);
 		} catch (Exception e) {
 			System.out.println(e);
 		}

@@ -2,13 +2,15 @@ package com.sample;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class MySqlConnection {
 	private Connection connect= null;
 	private Statement statement= null;
-//	private PreparedStatement preparedStatement= null;
-//	private ResultSet resultSet= null;
+	private PreparedStatement preparedStatement= null;
+	private ResultSet resultSet= null;
 
 	final private String host= "rules.carnirybxixz.us-east-1.rds.amazonaws.com";
 	final private String user= "admin";
@@ -54,12 +56,18 @@ public class MySqlConnection {
 			// Statements allow to issue SQL queries to the database
 			statement= connect.createStatement();
 
+			preparedStatement= connect.prepareStatement("USE insurance");
+			preparedStatement.executeUpdate();
+
 			if (state == 1) {
-				connect.prepareStatement(
-					"INSERT INTO 'applicantRecords' (id, name, dob, gender, single, risk, education, approvalStatus, approval Score, region)" +
-						"VALUES (" + id + ", " + name + ", " + dob + ", " + gender + ", " + single + ", " + risk +
+				preparedStatement= connect.prepareStatement(
+					"INSERT IGNORE INTO applicantRecords (id, name, dob, gender, single, risk, education, approvalStatus, approvalScore, region)" +
+						"VALUES (" + id + ", '" + name + "' , " + dob.getYear() + ", " + gender + ", " + single + ", " +
+						risk +
 						", " +
-						education_status + ", " + approval_status + ", " + approval_score + ", " + region + ")");
+						education_status + ", " + approval_status + ", " + approval_score + ", " + region +
+						")");
+				preparedStatement.executeUpdate();
 			}
 		} catch (Exception e) {
 			System.out.println(e);

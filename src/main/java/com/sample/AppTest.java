@@ -1,13 +1,8 @@
 package com.sample;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.drools.compiler.lang.DrlDumper;
 import org.drools.compiler.lang.api.DescrFactory;
 import org.drools.compiler.lang.api.PackageDescrBuilder;
-import org.drools.template.ObjectDataCompiler;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieFileSystem;
 import org.kie.api.runtime.KieContainer;
@@ -51,21 +46,20 @@ public class AppTest {
 			H= new Applicant("Greta Keller", 1, 2000, 60613, 0, Applicant.BACHELORS, 0);
 
 			test= new ApplicantInfo();
-			InputStream template= AppTest.class.getResourceAsStream("/src/main/resources/rules/level-1-setters.drt");
-			List<ApplicantInfo> data= new ArrayList<>();
-			data.add(test);
-			ObjectDataCompiler converter= new ObjectDataCompiler();
-			String drl= converter.compile(data, template);
-
-			kSession.insert(A);
-			kSession.insert(B);
-			kSession.insert(C);
-			kSession.insert(D);
-			kSession.insert(E);
-			kSession.insert(F);
-			kSession.insert(G);
-			kSession.insert(H);
+			kSession.insert(test);
+			System.out.println("the gender is: " + test.getApplicant().getGender());
 			kSession.fireAllRules();
+			System.out.println("the gender is: " + test.getApplicant().getGender());
+
+//			kSession.insert(A);
+//			kSession.insert(B);
+//			kSession.insert(C);
+//			kSession.insert(D);
+//			kSession.insert(E);
+//			kSession.insert(F);
+//			kSession.insert(G);
+//			kSession.insert(H);
+//			kSession.fireAllRules();
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}

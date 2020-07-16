@@ -30,4 +30,40 @@ public class ApplicantInfo {
 	public void setGender() {
 		applicant.setGender(gender);
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public int getDob() {
+		return dob;
+	}
+
+	public int getZipcode() {
+		return zipcode;
+	}
+
+	public int getSingle() {
+		return single;
+	}
+
+	public int getEducation_status() {
+		return education_status;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getRisk() {
+		return risk;
+	}
+
+	public Applicant getApplicant() {
+		return applicant;
+	}
 }

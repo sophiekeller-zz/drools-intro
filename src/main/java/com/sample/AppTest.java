@@ -35,21 +35,23 @@ public class AppTest {
 			KieSession kSession= kContainer.newKieSession("ksession-rules");
 
 			// assembling facts and firing
-			A= new Applicant("Jane Doe", 1, 1990, 5000, 1, Applicant.MASTERS, 0);
-			B= new Applicant("John Doe", 0, 2000, 95000, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
-			C= new Applicant("Rachel Green", 1, 1999, 22124, 1, Applicant.BACHELORS, 0);
-			D= new Applicant("Brownie Brown", 1, 1999, 50004, 0, Applicant.HIGH_SCHOOL_DIPLOMA,
-				1);
-			E= new Applicant("John Smith", 0, 1973, 45000, 0, Applicant.BACHELORS, 0);
-			F= new Applicant("Sarah Johnson", 1, 1945, 0, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
-			G= new Applicant("Sophie Keller", 1, 2000, 60613, 0, Applicant.BACHELORS, 0);
-			H= new Applicant("Greta Keller", 1, 2000, 60613, 0, Applicant.BACHELORS, 0);
+//			A= new Applicant("Jane Doe", 1, 1990, 5000, 1, Applicant.MASTERS, 0);
+//			B= new Applicant("John Doe", 0, 2000, 95000, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
+//			C= new Applicant("Rachel Green", 1, 1999, 22124, 1, Applicant.BACHELORS, 0);
+//			D= new Applicant("Brownie Brown", 1, 1999, 50004, 0, Applicant.HIGH_SCHOOL_DIPLOMA,
+//				1);
+//			E= new Applicant("John Smith", 0, 1973, 45000, 0, Applicant.BACHELORS, 0);
+//			F= new Applicant("Sarah Johnson", 1, 1945, 0, 1, Applicant.HIGH_SCHOOL_DIPLOMA, 1);
+//			G= new Applicant("Sophie Keller", 1, 2000, 60613, 0, Applicant.BACHELORS, 0);
+//			H= new Applicant("Greta Keller", 1, 2000, 60613, 0, Applicant.BACHELORS, 0);
 
 			test= new ApplicantInfo();
 			kSession.insert(test);
 			System.out.println("the gender is: " + test.getApplicant().getGender());
+			System.out.println("single?: " + test.getApplicant().isSingle());
 			kSession.fireAllRules();
 			System.out.println("the gender is: " + test.getApplicant().getGender());
+			System.out.println("single?: " + test.getApplicant().isSingle());
 
 //			kSession.insert(A);
 //			kSession.insert(B);
@@ -63,18 +65,18 @@ public class AppTest {
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-		try {
-			db.writeDataBaseApplicant(A);
-			db.writeDataBaseApplicant(B);
-			db.writeDataBaseApplicant(C);
-			db.writeDataBaseApplicant(D);
-			db.writeDataBaseApplicant(E);
-			db.writeDataBaseApplicant(F);
-			db.writeDataBaseApplicant(G);
-			db.writeDataBaseApplicant(H);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+//		try {
+//			db.writeDataBaseApplicant(A);
+//			db.writeDataBaseApplicant(B);
+//			db.writeDataBaseApplicant(C);
+//			db.writeDataBaseApplicant(D);
+//			db.writeDataBaseApplicant(E);
+//			db.writeDataBaseApplicant(F);
+//			db.writeDataBaseApplicant(G);
+//			db.writeDataBaseApplicant(H);
+//		} catch (Exception e) {
+//			System.out.println(e);
+//		}
 	}
 
 	// String [] row1 = [“setGender”, “gender”, “==”, “int”, "0"]

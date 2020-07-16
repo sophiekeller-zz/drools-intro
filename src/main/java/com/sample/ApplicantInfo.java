@@ -27,8 +27,12 @@ public class ApplicantInfo {
 
 	}
 
-	public void setGender() {
-		applicant.setGender(gender);
+	public void setGender(int i) {
+		applicant.setGender(i);
+	}
+
+	public void setSingle(int i) {
+		applicant.setSingle(i);
 	}
 
 	public String getName() {
